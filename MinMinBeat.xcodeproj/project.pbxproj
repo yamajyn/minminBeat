@@ -15,6 +15,11 @@
 		B31535391F4C657A00C67A3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B31535371F4C657A00C67A3F /* Main.storyboard */; };
 		B315353B1F4C657A00C67A3F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B315353A1F4C657A00C67A3F /* Assets.xcassets */; };
 		B315353E1F4C657A00C67A3F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B315353C1F4C657A00C67A3F /* LaunchScreen.storyboard */; };
+		B31535481F4C65A100C67A3F /* CicadaBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31535471F4C65A100C67A3F /* CicadaBlock.swift */; };
+		B315354E1F4D4DFA00C67A3F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B315354C1F4D4DFA00C67A3F /* Assets.xcassets */; };
+		B31535501F4D506000C67A3F /* TouchParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = B315354F1F4D506000C67A3F /* TouchParticle.sks */; };
+		B31535521F4D5A2100C67A3F /* CicadaParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = B31535511F4D5A2100C67A3F /* CicadaParticle.sks */; };
+		B31535541F4D5C6B00C67A3F /* TouchParticle2.sks in Resources */ = {isa = PBXBuildFile; fileRef = B31535531F4D5C6B00C67A3F /* TouchParticle2.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +33,11 @@
 		B315353A1F4C657A00C67A3F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B315353D1F4C657A00C67A3F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B315353F1F4C657A00C67A3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B31535471F4C65A100C67A3F /* CicadaBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CicadaBlock.swift; sourceTree = "<group>"; };
+		B315354C1F4D4DFA00C67A3F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B315354F1F4D506000C67A3F /* TouchParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TouchParticle.sks; sourceTree = "<group>"; };
+		B31535511F4D5A2100C67A3F /* CicadaParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CicadaParticle.sks; sourceTree = "<group>"; };
+		B31535531F4D5C6B00C67A3F /* TouchParticle2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TouchParticle2.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +54,7 @@
 		B31535211F4C657A00C67A3F = {
 			isa = PBXGroup;
 			children = (
+				B315354C1F4D4DFA00C67A3F /* Assets.xcassets */,
 				B315352C1F4C657A00C67A3F /* MinMinBeat */,
 				B315352B1F4C657A00C67A3F /* Products */,
 			);
@@ -64,6 +75,10 @@
 				B315352F1F4C657A00C67A3F /* GameScene.sks */,
 				B31535311F4C657A00C67A3F /* Actions.sks */,
 				B31535331F4C657A00C67A3F /* GameScene.swift */,
+				B315354F1F4D506000C67A3F /* TouchParticle.sks */,
+				B31535531F4D5C6B00C67A3F /* TouchParticle2.sks */,
+				B31535511F4D5A2100C67A3F /* CicadaParticle.sks */,
+				B31535471F4C65A100C67A3F /* CicadaBlock.swift */,
 				B31535351F4C657A00C67A3F /* GameViewController.swift */,
 				B31535371F4C657A00C67A3F /* Main.storyboard */,
 				B315353A1F4C657A00C67A3F /* Assets.xcassets */,
@@ -135,9 +150,13 @@
 			files = (
 				B31535391F4C657A00C67A3F /* Main.storyboard in Resources */,
 				B31535301F4C657A00C67A3F /* GameScene.sks in Resources */,
+				B31535521F4D5A2100C67A3F /* CicadaParticle.sks in Resources */,
 				B315353B1F4C657A00C67A3F /* Assets.xcassets in Resources */,
+				B315354E1F4D4DFA00C67A3F /* Assets.xcassets in Resources */,
 				B315353E1F4C657A00C67A3F /* LaunchScreen.storyboard in Resources */,
 				B31535321F4C657A00C67A3F /* Actions.sks in Resources */,
+				B31535501F4D506000C67A3F /* TouchParticle.sks in Resources */,
+				B31535541F4D5C6B00C67A3F /* TouchParticle2.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B31535341F4C657A00C67A3F /* GameScene.swift in Sources */,
+				B31535481F4C65A100C67A3F /* CicadaBlock.swift in Sources */,
 				B31535361F4C657A00C67A3F /* GameViewController.swift in Sources */,
 				B315352E1F4C657A00C67A3F /* AppDelegate.swift in Sources */,
 			);
