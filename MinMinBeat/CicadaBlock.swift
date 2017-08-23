@@ -9,23 +9,21 @@
 import SpriteKit
 import GameplayKit
 
-struct TouchPos{
+struct PosData{
     var x:Int
     var y:Int
 }
 
 class CicadaBlock : SKSpriteNode {
     
-    public var touchData : TouchPos? //送信する座標データ
-    
-    private var maxPosValue = CGPoint(x: 100, y: 100) //四角内の座標値の範囲
-    
+    public var posData : PosData? //送信する座標データ
+    private var maxPosValue : CGPoint //四角内の座標値の範囲
     private var particle:SKEmitterNode?
     
     
-    
-    init(length:CGFloat) {
-        super.init(texture: SKTexture(imageNamed: "block"), color: UIColor.blue, size: CGSize(width: length, height: length))
+    init(size : CGSize, valueRange : CGPoint) {
+        self.maxPosValue = valueRange
+        super.init(texture: SKTexture(imageNamed: "block"), color: UIColor.blue, size:size)
         self.isUserInteractionEnabled = true
         self.zPosition = 0
         self.anchorPoint =  CGPoint(x: 0, y: 0)
@@ -57,11 +55,15 @@ class CicadaBlock : SKSpriteNode {
         for t in touches {
             let touchPos = t.location(in: self)
             //particleを四角内に収める
-            let loc = normalize(location: touchPos, min: CGPoint(x:0,y:0), max: CGPoint(x: self.size.width, y: self.size.height))
+            let loc = normalize(
+                location: touchPos,
+                min: CGPoint(x:0,y:0),
+                max: CGPoint(x: self.size.width, y: self.size.height)
+            )
             moveParticle(pos: loc)
             
-            touchData = map(location: loc)
-            print(touchData!)
+            posData = map(location: loc)
+            print(posData!)
         }
     }
     
@@ -72,10 +74,10 @@ class CicadaBlock : SKSpriteNode {
     }
     
     //座標値を欲しい範囲内に収める
-    func map(location:CGPoint) -> TouchPos{
+    func map(location:CGPoint) -> PosData{
         let x = location.x / self.size.width * maxPosValue.x
         let y = location.y / self.size.height * maxPosValue.y
-        let mappedPos =  TouchPos(x: Int(x), y: Int(y))
+        let mappedPos =  PosData(x: Int(x), y: Int(y))
         return mappedPos
     }
     
