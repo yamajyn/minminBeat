@@ -12,6 +12,7 @@ class CicadaButton:SKSpriteNode{
     
     let onTexture : SKTexture
     let offTexture : SKTexture
+    let center = NotificationCenter.default
     
     init(index : Int, imageNamed : String, size:CGSize){
         self.onTexture = SKTexture(imageNamed: imageNamed + "_on")
@@ -31,7 +32,7 @@ class CicadaButton:SKSpriteNode{
         }
         if let name = self.name{
             print(name)
-            NotificationCenter.default.post(name: Notification.Name(rawValue: name), object: self)
+            center.post(name: Notification.Name(rawValue: name), object: self)
         }
     }
     

@@ -18,7 +18,9 @@ class CicadaBlock : SKSpriteNode {
     
     public var posData : PosData? //送信する座標データ
     private var maxPosValue : CGPoint //四角内の座標値の範囲
-    private var particle:SKEmitterNode?
+    public var particle:SKEmitterNode?
+    private let particleMode = ["TouchParticle","TouchParticle2","CicadaParticle","TouchParticle","TouchParticle2"]
+    private var mode = 0
     
     
     init(size : CGSize, valueRange : CGPoint) {
@@ -40,9 +42,9 @@ class CicadaBlock : SKSpriteNode {
         }
     }
     
-    func makeParticle(pos:CGPoint){
+    private func makeParticle(pos:CGPoint){
         if self.particle == nil{
-            self.particle = SKEmitterNode(fileNamed: "TouchParticle2.sks")
+            self.particle = SKEmitterNode(fileNamed: particleMode[self.mode] + ".sks")
             if let particle = self.particle{
                 particle.position = pos
                 particle.targetNode = self
@@ -63,18 +65,18 @@ class CicadaBlock : SKSpriteNode {
             moveParticle(pos: loc)
             
             posData = map(location: loc)
-            print(posData!)
+            //print(posData!)
         }
     }
     
-    func moveParticle(pos:CGPoint){
+    private func moveParticle(pos:CGPoint){
         if let particle = self.particle{
             particle.position = pos
         }
     }
     
     //座標値を欲しい範囲内に収める
-    func map(location:CGPoint) -> PosData{
+    private func map(location:CGPoint) -> PosData{
         let x = location.x / self.size.width * maxPosValue.x
         let y = location.y / self.size.height * maxPosValue.y
         let mappedPos =  PosData(x: Int(x), y: Int(y))
@@ -82,7 +84,7 @@ class CicadaBlock : SKSpriteNode {
     }
     
     //範囲外に出た時の正規化
-    func normalize(location:CGPoint, min:CGPoint, max:CGPoint) -> CGPoint{
+    private func normalize(location:CGPoint, min:CGPoint, max:CGPoint) -> CGPoint{
         var loc = location
         if loc.x < min.x{
             loc.x = min.x
@@ -104,7 +106,7 @@ class CicadaBlock : SKSpriteNode {
         }
     }
     
-    func deleteParticle(){
+    private func deleteParticle(){
         if let particle = self.particle{
             particle.particleBirthRate = 0
             let wait = SKAction.wait(forDuration: TimeInterval(particle.particleLifetime))
@@ -113,6 +115,10 @@ class CicadaBlock : SKSpriteNode {
             particle.run(action)
             self.particle = nil
         }
+    }
+    
+    public func setMode(mode : Int){
+        self.mode = mode - 1
     }
 }
 
