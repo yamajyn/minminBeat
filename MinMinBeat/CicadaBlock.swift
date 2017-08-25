@@ -18,8 +18,10 @@ class CicadaBlock : SKSpriteNode {
     
     public var posData : PosData? //送信する座標データ
     private var maxPosValue : CGPoint //四角内の座標値の範囲
+    
     public var particle:SKEmitterNode?
     private let particleMode = ["TouchParticle","TouchParticle2","CicadaParticle","TouchParticle","TouchParticle2"]
+    
     private var mode = 0
     
     

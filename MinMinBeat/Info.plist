@@ -39,5 +39,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>minminBeatBoxに接続します</string>
 </dict>
 </plist>
