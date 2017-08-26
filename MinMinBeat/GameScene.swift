@@ -24,6 +24,8 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     var targetCharacteristic: CBCharacteristic?
     
     
+    var last: CFTimeInterval!
+    
     public func setPeripheral(targetpPeripheral:CBPeripheral){
         self.targetPeripheral = targetpPeripheral
     }
@@ -72,11 +74,11 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
             //位置データをDataに変換
             let array : [UInt8] = [UInt8(posData.x),UInt8(posData.y)]
             self.sendData = Data(bytes: array)
-            if let d = self.sendData{
-                //ble.update(data:d)
-                update(data:d)
-                printBytes(bytes: array)
-            }
+//            if let d = self.sendData{
+//                //ble.update(data:d)
+//                update(data:d)
+//                printBytes(bytes: array)
+//            }
         }
     }
     //データの送信用関数
@@ -91,7 +93,17 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     
     
     override func update(_ currentTime: TimeInterval) {
+        if !(last != nil) {
+            last = currentTime
+        }
         
+        if last + 0.1 <= currentTime{
+            if let d = self.sendData{
+                //ble.update(data:d)
+                update(data:d)
+            }
+            last = currentTime
+        }
     }
     
     func printBytes(bytes:[UInt8]){

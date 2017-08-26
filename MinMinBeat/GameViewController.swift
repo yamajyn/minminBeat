@@ -38,6 +38,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
             view.ignoresSiblingOrder = true
             view.showsFPS = true
             view.showsNodeCount = true
+            //view.frameInterval = 12
         }
     }
 
