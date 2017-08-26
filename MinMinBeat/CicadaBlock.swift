@@ -28,7 +28,7 @@ class CicadaBlock : SKSpriteNode {
     
     init(size : CGSize, valueRange : CGPoint) {
         self.maxPosValue = valueRange
-        super.init(texture: SKTexture(imageNamed: "block"), color: UIColor.blue, size:size)
+        super.init(texture: SKTexture(imageNamed: "logo"), color: UIColor.blue, size:size)
         self.isUserInteractionEnabled = true
         self.zPosition = 0
         self.anchorPoint =  CGPoint(x: 0, y: 0)

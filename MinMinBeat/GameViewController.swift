@@ -20,6 +20,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
     var targetCharacteristic: CBCharacteristic!
     let serviceUuids = [CBUUID(string: "0001")]
     let characteristicUuids = [CBUUID(string: "12ab")]
+    var scene : GameScene?
 
 
     override func viewDidLoad() {
@@ -27,7 +28,17 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
         
         centralManager = CBCentralManager(delegate: self, queue: nil, options: nil)
         
-        
+        if let view = self.view as! SKView? {
+            
+            scene = GameScene()
+            // Set the scale mode to scale to fit the window
+            scene!.scaleMode = .aspectFill
+            scene!.size = view.frame.size
+            view.presentScene(scene)
+            view.ignoresSiblingOrder = true
+            view.showsFPS = true
+            view.showsNodeCount = true
+        }
     }
 
     override var shouldAutorotate: Bool {
@@ -125,20 +136,11 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
             print("error:\(e.localizedDescription)")
         }else{
             targetCharacteristic = service.characteristics![0]
-            
-            
-            if let view = self.view as! SKView? {
-                
-                let scene = GameScene(targetpPeripheral: targetPeripheral,targetCharacteristic: targetCharacteristic)
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                scene.size = view.frame.size
-                view.presentScene(scene)
-                view.ignoresSiblingOrder = true
-                view.showsFPS = true
-                view.showsNodeCount = true
+            if let scene = self.scene{
+                scene.setPeripheral(targetpPeripheral: self.targetPeripheral)
+                scene.setCharacter(targetCharacteristic: self.targetCharacteristic)
             }
-
         }
+        
     }
 }

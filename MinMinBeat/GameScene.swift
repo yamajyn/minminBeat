@@ -19,18 +19,17 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     var sendData : Data?
     private var buttons : [SKButton] = []
     
-    var targetPeripheral: CBPeripheral!
+    var targetPeripheral: CBPeripheral?
     var targetService: CBService!
-    var targetCharacteristic: CBCharacteristic!
+    var targetCharacteristic: CBCharacteristic?
     
-    init(targetpPeripheral:CBPeripheral,targetCharacteristic:CBCharacteristic){
+    
+    public func setPeripheral(targetpPeripheral:CBPeripheral){
         self.targetPeripheral = targetpPeripheral
-        self.targetCharacteristic = targetCharacteristic
-        super.init()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    public func setCharacter(targetCharacteristic:CBCharacteristic){
+        self.targetCharacteristic = targetCharacteristic
     }
     
     
@@ -82,9 +81,11 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     }
     //データの送信用関数
     func update(data:Data){
-        if self.targetCharacteristic != nil{
-            targetPeripheral.writeValue(data, for: targetCharacteristic,type:CBCharacteristicWriteType.withResponse)
+        if let targetChara = self.targetCharacteristic{
+            if let targetPeriphe = self.targetPeripheral{
+            targetPeriphe.writeValue(data, for: targetChara,type:CBCharacteristicWriteType.withResponse)
             print("complete")
+            }
         }
     }
     
