@@ -22,9 +22,11 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     var targetPeripheral: CBPeripheral?
     var targetService: CBService!
     var targetCharacteristic: CBCharacteristic?
+    var count = 0
     
     
     var last: CFTimeInterval!
+    var current: CFTimeInterval!
     
     public func setPeripheral(targetpPeripheral:CBPeripheral){
         self.targetPeripheral = targetpPeripheral
@@ -63,7 +65,6 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     
     func buttonTapBegan(_ name: String) {
         if let data = name.data(using: .utf8){
-        //ble.update(data: data)
             update(data:data)
         }
     }
@@ -74,11 +75,16 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
             //位置データをDataに変換
             let array : [UInt8] = [UInt8(posData.x),UInt8(posData.y)]
             self.sendData = Data(bytes: array)
-//            if let d = self.sendData{
-//                //ble.update(data:d)
-//                update(data:d)
-//                printBytes(bytes: array)
-//            }
+            if !(last != nil) {
+                last = current
+            }
+            
+            if last + 0.1 <= current{
+                if let d = self.sendData{
+                    update(data:d)
+                }
+                last = current
+            }
         }
     }
     //データの送信用関数
@@ -93,17 +99,7 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     
     
     override func update(_ currentTime: TimeInterval) {
-        if !(last != nil) {
-            last = currentTime
-        }
-        
-        if last + 0.1 <= currentTime{
-            if let d = self.sendData{
-                //ble.update(data:d)
-                update(data:d)
-            }
-            last = currentTime
-        }
+        current = currentTime
     }
     
     func printBytes(bytes:[UInt8]){
