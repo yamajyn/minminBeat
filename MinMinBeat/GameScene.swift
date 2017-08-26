@@ -12,13 +12,13 @@ import CoreBluetooth
 
 
 
-class GameScene: SKScene{
+class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     
     private let center = NotificationCenter.default
     var ble : BluetoothLE!
     var cicadaBlock : CicadaBlock?
     var sendData : Data?
-    var cicadas : CicadaButtons?
+    private var buttons : [SKButton] = []
     
     override func didMove(to view: SKView) {
         
@@ -34,31 +34,41 @@ class GameScene: SKScene{
         if let block = self.cicadaBlock{
             block.position = CGPoint(x: self.size.width / 10, y: self.size.height / 3)
             self.addChild(block)
+            block.padDelegate = self
         }
         
-        //Create cicadaButtons
-        cicadas = CicadaButtons(size: CGSize(width: len * 0.8, height: 100))
-        if let cicadas = cicadas{
-            cicadas.position = CGPoint(x: len / 10, y: 100)
-            self.addChild(cicadas)
+        //Create cicadaButton
+        for i in 0...4{
+            let buttonSize = CGSize(width: len * 9 / 50, height: len * 9 / 50)
+            let interval = (len * 0.9 - buttonSize.width) / 4
+            let x = len / 20 + CGFloat(i) * interval
+            self.buttons.append(SKButton(size:buttonSize, imageNamed: "semi0" + String(i+1)))
+            buttons[i].position = CGPoint(x:x,y:100)
+            buttons[i].tapDelegate = self
+            self.addChild(buttons[i])
         }
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+    func buttonTapBegan(_ name: String) {
+        if let data = name.data(using: .utf8){
+        ble.update(data: data)
+        }
     }
-    
-    override func update(_ currentTime: TimeInterval) {
-        
+    func padTap() {
         if let posData  = self.cicadaBlock!.posData {
             let array : [UInt8] = [UInt8(posData.x),UInt8(posData.y)]
             self.sendData = Data(bytes: array)
             if let d = self.sendData{
                 ble.update(data:d)
                 printBytes(bytes: array)
-                
             }
         }
+    }
+    
+    
+    override func update(_ currentTime: TimeInterval) {
+        
+        
     }
     
     func printBytes(bytes:[UInt8]){

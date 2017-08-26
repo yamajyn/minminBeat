@@ -16,13 +16,14 @@ struct PosData{
 
 class CicadaBlock : SKSpriteNode {
     
+    weak var padDelegate: PadTappedDelegate!
     public var posData : PosData? //送信する座標データ
     private var maxPosValue : CGPoint //四角内の座標値の範囲
     
     public var particle:SKEmitterNode?
-    private let particleMode = ["TouchParticle","TouchParticle2","CicadaParticle","TouchParticle","TouchParticle2"]
+    private let particleMode = ["TouchParticle2","TouchParticle2","CicadaParticle","TouchParticle","TouchParticle2"]
     
-    private var mode = 0
+    public var mode = 0
     
     
     init(size : CGSize, valueRange : CGPoint) {
@@ -41,6 +42,7 @@ class CicadaBlock : SKSpriteNode {
         for t in touches {
             let touchPos = t.location(in: self)
             makeParticle(pos: touchPos)
+            padDelegate.padTap()
         }
     }
     
@@ -68,6 +70,7 @@ class CicadaBlock : SKSpriteNode {
             
             posData = map(location: loc)
             //print(posData!)
+            padDelegate.padTap()
         }
     }
     
@@ -122,6 +125,13 @@ class CicadaBlock : SKSpriteNode {
     public func setMode(mode : Int){
         self.mode = mode - 1
     }
+}
+
+@objc protocol PadTappedDelegate : class {
+    //Buttonクラスでタッチされた
+    func padTap()
+    @objc optional func padTapEnded()
+    @objc optional func padTapCancelled()
 }
 
 
