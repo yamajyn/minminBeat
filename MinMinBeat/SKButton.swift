@@ -12,7 +12,7 @@ class SKButton : SKNode{
     
     weak var tapDelegate: ButtonTappedDelegate!
     var button:SKSpriteNode
-    var onButton:SKTexture?
+    var onButton:SKTexture?//offの状態のテクスチャを変えたい時設定しておく
     var offButton:SKTexture?
     
     internal init(imageNamed: String) {
@@ -24,6 +24,17 @@ class SKButton : SKNode{
         self.name = imageNamed
     }
     
+    convenience init(x: CGFloat, y: CGFloat, imageNamed: String){
+        self.init(imageNamed:imageNamed)
+        self.position = CGPoint(x: x + self.button.size.width / 2, y: y + self.button.size.height / 2)
+    }
+    
+    convenience init(x: CGFloat, y: CGFloat, offTexture:String,onTexture: String){
+        self.init(imageNamed:offTexture)
+        self.onButton = SKTexture(imageNamed: onTexture)
+        self.position = CGPoint(x: x + self.button.size.width / 2, y: y + self.button.size.height / 2)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -31,13 +42,21 @@ class SKButton : SKNode{
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let onButton = onButton{
             button.texture = onButton
+        }else{
+            let action = SKAction.scale(to: 0.9, duration: 0.03)
+            button.run(action)
         }
         tapDelegate.buttonTapBegan(self.name!)
+        print("touched")
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let offButton = offButton{
             button.texture = offButton
+        }
+        if onButton == nil{
+            let action = SKAction.scale(to: 1.0, duration: 0.03)
+            button.run(action)
         }
         tapDelegate.buttonTapEnded?(self.name!)
     }

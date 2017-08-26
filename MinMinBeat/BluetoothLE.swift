@@ -35,7 +35,9 @@ class BluetoothLE : NSObject,CBPeripheralManagerDelegate{
             let permissions: CBAttributePermissions = [.readable, .writeable]
             characteristic = CBMutableCharacteristic(type: characteristicUUID, properties: properties,
                                                      value: nil, permissions: permissions)
-            service.characteristics = [characteristic]
+            if let chara = self.characteristic{
+                service.characteristics = [chara]
+            }
             peripheralManager.add(service)
             
             sendData = Data(bytes: &sampleData, count: 4)
@@ -92,7 +94,9 @@ class BluetoothLE : NSObject,CBPeripheralManagerDelegate{
     }
     
     func update(data:Data){
-        self.peripheralManager.updateValue(data, for: characteristic, onSubscribedCentrals: nil)
+        if let chara = characteristic{
+            self.peripheralManager.updateValue(data, for: chara, onSubscribedCentrals: nil)
+        }
     }
     
 }

@@ -18,7 +18,7 @@
 		B31535501F4D506000C67A3F /* TouchParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = B315354F1F4D506000C67A3F /* TouchParticle.sks */; };
 		B31535521F4D5A2100C67A3F /* CicadaParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = B31535511F4D5A2100C67A3F /* CicadaParticle.sks */; };
 		B31535541F4D5C6B00C67A3F /* TouchParticle2.sks in Resources */ = {isa = PBXBuildFile; fileRef = B31535531F4D5C6B00C67A3F /* TouchParticle2.sks */; };
-		B3C367121F4D9E49001AF76D /* CicadaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C367111F4D9E49001AF76D /* CicadaButton.swift */; };
+		B3C367121F4D9E49001AF76D /* CicadaButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C367111F4D9E49001AF76D /* CicadaButtons.swift */; };
 		B3C367161F504B33001AF76D /* BluetoothLE.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C367151F504B33001AF76D /* BluetoothLE.swift */; };
 		B3C367181F505542001AF76D /* SKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C367171F505542001AF76D /* SKButton.swift */; };
 /* End PBXBuildFile section */
@@ -37,7 +37,7 @@
 		B315354F1F4D506000C67A3F /* TouchParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TouchParticle.sks; sourceTree = "<group>"; };
 		B31535511F4D5A2100C67A3F /* CicadaParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CicadaParticle.sks; sourceTree = "<group>"; };
 		B31535531F4D5C6B00C67A3F /* TouchParticle2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TouchParticle2.sks; sourceTree = "<group>"; };
-		B3C367111F4D9E49001AF76D /* CicadaButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CicadaButton.swift; sourceTree = "<group>"; };
+		B3C367111F4D9E49001AF76D /* CicadaButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CicadaButtons.swift; sourceTree = "<group>"; };
 		B3C367151F504B33001AF76D /* BluetoothLE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothLE.swift; sourceTree = "<group>"; };
 		B3C367171F505542001AF76D /* SKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,8 +76,11 @@
 				B315352D1F4C657A00C67A3F /* AppDelegate.swift */,
 				B31535351F4C657A00C67A3F /* GameViewController.swift */,
 				B31535331F4C657A00C67A3F /* GameScene.swift */,
-				B3C367191F505554001AF76D /* SceneItem */,
+				B31535471F4C65A100C67A3F /* CicadaBlock.swift */,
+				B3C367111F4D9E49001AF76D /* CicadaButtons.swift */,
 				B3C367151F504B33001AF76D /* BluetoothLE.swift */,
+				B3C367171F505542001AF76D /* SKButton.swift */,
+				B3C366EC1F4D8130001AF76D /* Particles */,
 				B31535371F4C657A00C67A3F /* Main.storyboard */,
 				B315353A1F4C657A00C67A3F /* Assets.xcassets */,
 				B315353C1F4C657A00C67A3F /* LaunchScreen.storyboard */,
@@ -94,17 +97,6 @@
 				B31535511F4D5A2100C67A3F /* CicadaParticle.sks */,
 			);
 			name = Particles;
-			sourceTree = "<group>";
-		};
-		B3C367191F505554001AF76D /* SceneItem */ = {
-			isa = PBXGroup;
-			children = (
-				B3C367171F505542001AF76D /* SKButton.swift */,
-				B31535471F4C65A100C67A3F /* CicadaBlock.swift */,
-				B3C367111F4D9E49001AF76D /* CicadaButton.swift */,
-				B3C366EC1F4D8130001AF76D /* Particles */,
-			);
-			name = SceneItem;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,7 +179,7 @@
 				B31535341F4C657A00C67A3F /* GameScene.swift in Sources */,
 				B3C367181F505542001AF76D /* SKButton.swift in Sources */,
 				B3C367161F504B33001AF76D /* BluetoothLE.swift in Sources */,
-				B3C367121F4D9E49001AF76D /* CicadaButton.swift in Sources */,
+				B3C367121F4D9E49001AF76D /* CicadaButtons.swift in Sources */,
 				B31535481F4C65A100C67A3F /* CicadaBlock.swift in Sources */,
 				B31535361F4C657A00C67A3F /* GameViewController.swift in Sources */,
 				B315352E1F4C657A00C67A3F /* AppDelegate.swift in Sources */,

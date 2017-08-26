@@ -14,21 +14,21 @@ import CoreBluetooth
 
 class GameScene: SKScene{
     
-    let center = NotificationCenter.default
-    public var cicadaBlock : CicadaBlock?
-    private var cicadaButton : [CicadaButton] = []
-    let ble = BluetoothLE()
-    
-    var sendData:Data?
-    
-    
+    private let center = NotificationCenter.default
+    var ble : BluetoothLE!
+    var cicadaBlock : CicadaBlock?
+    var sendData : Data?
+    var cicadas : CicadaButtons?
     
     override func didMove(to view: SKView) {
         
+        //initialize ble
+        ble = BluetoothLE()
+        
         //Create cicadaBlock node
-        let len = self.size.width * 0.8
+        let len = self.size.width
         self.cicadaBlock = CicadaBlock(
-            size: CGSize(width:len,height:len),
+            size: CGSize(width:len * 0.8,height:len * 0.8),
             valueRange: CGPoint(x:255,y:255)
         )
         if let block = self.cicadaBlock{
@@ -36,50 +36,12 @@ class GameScene: SKScene{
             self.addChild(block)
         }
         
-        cicadaButton = [
-            CicadaButton(
-                index:1,
-                imageNamed:"mushi_aburazemi",
-                size: CGSize(width:150,height:150)
-            ),
-            CicadaButton(
-                index:2,
-                imageNamed:"mushi_aburazemi",
-                size: CGSize(width:150,height:150)
-            ),
-            CicadaButton(
-                index:3,
-                imageNamed:"mushi_aburazemi",
-                size: CGSize(width:150,height:150)
-            ),
-            CicadaButton(
-                index:4,
-                imageNamed:"mushi_aburazemi",
-                size: CGSize(width:150,height:150)
-            ),
-            CicadaButton(
-                index:5,
-                imageNamed:"mushi_aburazemi",
-                size: CGSize(width:150,height:150)
-            )
-        ]
-        for i in 0...4{
-            cicadaButton.append(CicadaButton(
-                index:i+1,
-                imageNamed:"mushi_aburazemi",
-                size: CGSize(width:150,height:150)
-            ))
-            cicadaButton[i].position = CGPoint(x: 70 + i * 150, y: 200)
-            self.addChild(cicadaButton[i])
-            
+        //Create cicadaButtons
+        cicadas = CicadaButtons(size: CGSize(width: len * 0.8, height: 100))
+        if let cicadas = cicadas{
+            cicadas.position = CGPoint(x: len / 10, y: 100)
+            self.addChild(cicadas)
         }
-        center.addObserver(self, selector: #selector(self.mode1), name: Notification.Name(rawValue:String(1)), object: nil)
-        center.addObserver(self, selector: #selector(self.mode2), name: Notification.Name(rawValue:String(2)), object: nil)
-        center.addObserver(self, selector: #selector(self.mode3), name: Notification.Name(rawValue:String(3)), object: nil)
-        center.addObserver(self, selector: #selector(self.mode4), name: Notification.Name(rawValue:String(4)), object: nil)
-        center.addObserver(self, selector: #selector(self.mode5), name: Notification.Name(rawValue:String(5)), object: nil)
-        
-        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -87,37 +49,25 @@ class GameScene: SKScene{
     }
     
     override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+        
         if let posData  = self.cicadaBlock!.posData {
             let array : [UInt8] = [UInt8(posData.x),UInt8(posData.y)]
-            //let data = NSData(bytes: &value, length: 10)
             self.sendData = Data(bytes: array)
             if let d = self.sendData{
                 ble.update(data:d)
-                let hexStr = Data(bytes: array).map {
-                    String(format: "%.2hhx", $0)
-                    }.joined()
-                print(hexStr)
+                printBytes(bytes: array)
+                
             }
-            //var value: UInt = 0x0000FF80808080808000
-            //let data: NSData = NSData(bytes: &value, length: 10)
         }
     }
     
-    func mode1(){
-        self.cicadaBlock!.setMode(mode:1)
+    func printBytes(bytes:[UInt8]){
+        let hexStr = Data(bytes: bytes).map {
+            String(format: "%.2hhx", $0)
+            }.joined()
+        print(hexStr)
     }
-    func mode2(){
-        self.cicadaBlock!.setMode(mode:2)
-    }
-    func mode3(){
-        self.cicadaBlock!.setMode(mode:3)
-    }
-    func mode4(){
-        self.cicadaBlock!.setMode(mode:4)
-    }
-    func mode5(){
-        self.cicadaBlock!.setMode(mode:5)
-    }
+    
+    
     
 }
