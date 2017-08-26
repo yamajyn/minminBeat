@@ -19,7 +19,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
     var targetService: CBService!
     var targetCharacteristic: CBCharacteristic!
     let serviceUuids = [CBUUID(string: "0001")]
-    let characteristicUuids = [CBUUID(string: "0001")]
+    let characteristicUuids = [CBUUID(string: "12ab")]
 
 
     override func viewDidLoad() {
@@ -70,7 +70,8 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
         case .poweredOn:
             print("Bluetooth-On")
             //指定UUIDでPeripheralを検索する
-            centralManager.scanForPeripherals(withServices: self.serviceUuids, options: nil)
+            centralManager.scanForPeripherals(withServices: serviceUuids, options: nil)
+            print("検索開始")
         default:
             print("bluetoothが準備中又は無効")
         }
@@ -87,8 +88,9 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
                 title: "OK",
                 style: .default,
                 //Peripheralへの接続命令
-                handler: {(action)->Void in self.centralManager.connect(self.targetPeripheral, options: nil)}
-            )
+                handler: {(action)->Void in
+                        self.centralManager.connect(self.targetPeripheral, options: nil)
+            })
         )
         bleOnAlert.addAction(
             UIAlertAction(
@@ -96,8 +98,8 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
                 style: UIAlertActionStyle.cancel,
                 handler: {(action)->Void in
                     print("canceled")
-                    self.centralManager.stopScan()}
-            )
+                    self.centralManager.stopScan()
+            })
         )
         self.present(bleOnAlert, animated: true, completion: nil)
     }
@@ -111,6 +113,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
     }
     //サービスを検索した時に呼び出される
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        print(peripheral.services)
         peripheral.delegate = self
         targetService = peripheral.services![0]
         //指定のUUIDでcharacteristicを検索する
@@ -126,7 +129,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
             
             if let view = self.view as! SKView? {
                 
-                let scene = GameScene()
+                let scene = GameScene(targetpPeripheral: targetPeripheral,targetCharacteristic: targetCharacteristic)
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
                 scene.size = view.frame.size
