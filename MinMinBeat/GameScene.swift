@@ -54,8 +54,11 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
         ble.update(data: data)
         }
     }
+    
     func padTap() {
+        //タップした位置データ取得
         if let posData  = self.cicadaBlock!.posData {
+            //位置データをDataに変換
             let array : [UInt8] = [UInt8(posData.x),UInt8(posData.y)]
             self.sendData = Data(bytes: array)
             if let d = self.sendData{
@@ -68,7 +71,6 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     
     override func update(_ currentTime: TimeInterval) {
         
-        
     }
     
     func printBytes(bytes:[UInt8]){
@@ -77,7 +79,5 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
             }.joined()
         print(hexStr)
     }
-    
-    
     
 }

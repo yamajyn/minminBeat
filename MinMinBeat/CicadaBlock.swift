@@ -127,11 +127,5 @@ class CicadaBlock : SKSpriteNode {
     }
 }
 
-@objc protocol PadTappedDelegate : class {
-    //Buttonクラスでタッチされた
-    func padTap()
-    @objc optional func padTapEnded()
-    @objc optional func padTapCancelled()
-}
 
 

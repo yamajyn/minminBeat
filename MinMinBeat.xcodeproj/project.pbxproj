@@ -20,6 +20,8 @@
 		B31535541F4D5C6B00C67A3F /* TouchParticle2.sks in Resources */ = {isa = PBXBuildFile; fileRef = B31535531F4D5C6B00C67A3F /* TouchParticle2.sks */; };
 		B3C367161F504B33001AF76D /* BluetoothLE.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C367151F504B33001AF76D /* BluetoothLE.swift */; };
 		B3C367181F505542001AF76D /* SKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C367171F505542001AF76D /* SKButton.swift */; };
+		B3C3671B1F511694001AF76D /* ButtonTappedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C3671A1F511694001AF76D /* ButtonTappedDelegate.swift */; };
+		B3C3671D1F5116C1001AF76D /* PadTappedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C3671C1F5116C1001AF76D /* PadTappedDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		B31535531F4D5C6B00C67A3F /* TouchParticle2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TouchParticle2.sks; sourceTree = "<group>"; };
 		B3C367151F504B33001AF76D /* BluetoothLE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothLE.swift; sourceTree = "<group>"; };
 		B3C367171F505542001AF76D /* SKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKButton.swift; sourceTree = "<group>"; };
+		B3C3671A1F511694001AF76D /* ButtonTappedDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonTappedDelegate.swift; sourceTree = "<group>"; };
+		B3C3671C1F5116C1001AF76D /* PadTappedDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PadTappedDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,9 +78,9 @@
 				B315352D1F4C657A00C67A3F /* AppDelegate.swift */,
 				B31535351F4C657A00C67A3F /* GameViewController.swift */,
 				B31535331F4C657A00C67A3F /* GameScene.swift */,
-				B31535471F4C65A100C67A3F /* CicadaBlock.swift */,
 				B3C367151F504B33001AF76D /* BluetoothLE.swift */,
-				B3C367171F505542001AF76D /* SKButton.swift */,
+				B3C3671E1F511775001AF76D /* Pad */,
+				B3C3671F1F511784001AF76D /* Button */,
 				B3C366EC1F4D8130001AF76D /* Particles */,
 				B31535371F4C657A00C67A3F /* Main.storyboard */,
 				B315353A1F4C657A00C67A3F /* Assets.xcassets */,
@@ -94,6 +98,24 @@
 				B31535511F4D5A2100C67A3F /* CicadaParticle.sks */,
 			);
 			name = Particles;
+			sourceTree = "<group>";
+		};
+		B3C3671E1F511775001AF76D /* Pad */ = {
+			isa = PBXGroup;
+			children = (
+				B31535471F4C65A100C67A3F /* CicadaBlock.swift */,
+				B3C3671C1F5116C1001AF76D /* PadTappedDelegate.swift */,
+			);
+			name = Pad;
+			sourceTree = "<group>";
+		};
+		B3C3671F1F511784001AF76D /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				B3C367171F505542001AF76D /* SKButton.swift */,
+				B3C3671A1F511694001AF76D /* ButtonTappedDelegate.swift */,
+			);
+			name = Button;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,7 +195,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3C3671D1F5116C1001AF76D /* PadTappedDelegate.swift in Sources */,
 				B31535341F4C657A00C67A3F /* GameScene.swift in Sources */,
+				B3C3671B1F511694001AF76D /* ButtonTappedDelegate.swift in Sources */,
 				B3C367181F505542001AF76D /* SKButton.swift in Sources */,
 				B3C367161F504B33001AF76D /* BluetoothLE.swift in Sources */,
 				B31535481F4C65A100C67A3F /* CicadaBlock.swift in Sources */,

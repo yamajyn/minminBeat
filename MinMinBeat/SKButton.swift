@@ -11,8 +11,9 @@ import SpriteKit
 class SKButton : SKNode{
     
     weak var tapDelegate: ButtonTappedDelegate!
+    
     var button:SKSpriteNode
-    var onButton:SKTexture?//offの状態のテクスチャを変えたい時設定しておく
+    var onButton:SKTexture? //offの状態のテクスチャを変えたい時設定しておく
     var offButton:SKTexture?
     var value = false
     
@@ -24,7 +25,10 @@ class SKButton : SKNode{
         self.addChild(button)
         self.name = imageNamed
         self.button.size = size
-        self.button.position = CGPoint(x: self.button.size.width / CGFloat(2), y: self.button.size.height / CGFloat(2))
+        self.button.position = CGPoint(
+            x: self.button.size.width / CGFloat(2),
+            y: self.button.size.height / CGFloat(2)
+        )
     }
     
     convenience init(size: CGSize, offTexture:String,onTexture: String){
@@ -67,9 +71,4 @@ class SKButton : SKNode{
     }
 }
 
-@objc protocol ButtonTappedDelegate : class {
-    //Buttonクラスでタッチされた
-    func buttonTapBegan(_ name:String)
-    @objc optional func buttonTapEnded(_ name:String)
-    @objc optional func buttonTapCancelled(_ name:String)
-}
+
