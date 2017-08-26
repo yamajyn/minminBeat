@@ -18,7 +18,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
     var targetPeripheral: CBPeripheral!
     var targetService: CBService!
     var targetCharacteristic: CBCharacteristic!
-    let serviceUuids = [CBUUID(string: "0001")]
+    let serviceUuids = [CBUUID(string: "abcd")]
     let characteristicUuids = [CBUUID(string: "12ab")]
     var scene : GameScene?
 
