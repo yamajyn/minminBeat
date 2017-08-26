@@ -14,16 +14,27 @@ import CoreBluetooth
 
 class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     
-    private let center = NotificationCenter.default
-    var ble : BluetoothLE!
+    
     var cicadaBlock : CicadaBlock?
     var sendData : Data?
     private var buttons : [SKButton] = []
     
+    var targetPeripheral: CBPeripheral!
+    var targetService: CBService!
+    var targetCharacteristic: CBCharacteristic!
+    
+    init(targetpPeripheral:CBPeripheral,targetCharacteristic:CBCharacteristic){
+        self.targetPeripheral = targetpPeripheral
+        self.targetCharacteristic = targetCharacteristic
+        super.init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     override func didMove(to view: SKView) {
-        
-        //initialize ble
-        ble = BluetoothLE()
         
         //Create cicadaBlock node
         let len = self.size.width
@@ -51,7 +62,8 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     
     func buttonTapBegan(_ name: String) {
         if let data = name.data(using: .utf8){
-        ble.update(data: data)
+        //ble.update(data: data)
+            update(data:data)
         }
     }
     
@@ -62,9 +74,17 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
             let array : [UInt8] = [UInt8(posData.x),UInt8(posData.y)]
             self.sendData = Data(bytes: array)
             if let d = self.sendData{
-                ble.update(data:d)
+                //ble.update(data:d)
+                update(data:d)
                 printBytes(bytes: array)
             }
+        }
+    }
+    //データの送信用関数
+    func update(data:Data){
+        if self.targetCharacteristic != nil{
+            targetPeripheral.writeValue(data, for: targetCharacteristic,type:CBCharacteristicWriteType.withResponse)
+            print("complete")
         }
     }
     
