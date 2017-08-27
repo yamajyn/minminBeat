@@ -16,6 +16,7 @@ class BluetoothLE{
     var targetService: CBService!
     var targetCharacteristic: CBCharacteristic?
     
+    
     public func setPeripheral(targetpPeripheral:CBPeripheral){
         self.targetPeripheral = targetpPeripheral
     }
@@ -54,8 +55,6 @@ class BluetoothLE{
             dataKey = 4
         case "sample":
             dataKey = 5
-        case "master":
-            dataKey = 7
         default:
             print("データが受信できません")
             return
@@ -67,6 +66,20 @@ class BluetoothLE{
             self.update(data:data)
             printBytes(bytes: array)
         }
+    }
+    
+    func masterToUInt8(state:Bool){
+        let masterState = state
+        var array = [UInt8]()
+        switch masterState {
+        case true:
+            array = [UInt8(7),UInt8(0)]
+        default:
+            array = [UInt8(7),UInt8(1)]
+        }
+        let data = Data(bytes: array)
+        self.update(data:data)
+        printBytes(bytes: array)
     }
     
     func volumeToUInt8(volume:Int){

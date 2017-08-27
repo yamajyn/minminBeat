@@ -17,6 +17,7 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     
     var cicadaBlock : CicadaBlock?
     var cicadaButtons : CicadaButtons?
+    let masterButton = SKButton(size: CGSize(width: 50, height: 50), imageNamed: "master")
     
     var last2: CFTimeInterval!
     var last: CFTimeInterval!
@@ -64,7 +65,7 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
         
         
         let slider = UISlider(frame: CGRect(x: 0, y: 0, width: w, height: 50))
-        slider.layer.position = CGPoint(x: self.size.width * 2 / 7, y: self.size.height * 2 / 7)
+        slider.layer.position = CGPoint(x: w / 2, y: self.size.height - 50)
         slider.minimumValue = 0
         slider.maximumValue = 100
         slider.value = 50
@@ -72,6 +73,11 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
                          action: #selector(onMySlider(_:)),
                          for: UIControlEvents.valueChanged)
         self.view?.addSubview(slider)
+        
+        masterButton.tapDelegate = self
+        masterButton.position = CGPoint(x: 0, y: self.size.height - 50)
+        self.addChild(masterButton)
+        masterButton.value = false
     }
     
     func onMySlider (_ sender: UISlider){
@@ -84,10 +90,12 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
         }
 
     }
-    
-    
 
     func buttonTapEnded(_ name: String){
+        if name == "master"{
+            ble.masterToUInt8(state: masterButton.value)
+            return
+        }
         ble.nameToUInt8(name: name)
     }
     
