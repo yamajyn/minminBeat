@@ -42,8 +42,8 @@ class BluetoothLE{
     
     func nameToUInt8(name:String){
         var dataKey:Int = 0
-        let dataname:String = name.substring(to: name.index(name.endIndex, offsetBy: -1))
-        switch dataname {
+        let dataName:String = name.substring(to: name.index(name.endIndex, offsetBy: -1))
+        switch dataName {
         case "semi":
             dataKey = 1
         case "track":
@@ -56,6 +56,7 @@ class BluetoothLE{
             dataKey = 5
         default:
             print("データが受信できません")
+            return
         }
         
         if let dataValue = Int(name.substring(from: name.index(name.endIndex, offsetBy: -1))){
