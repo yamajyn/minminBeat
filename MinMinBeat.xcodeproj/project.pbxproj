@@ -18,6 +18,7 @@
 		B31535501F4D506000C67A3F /* TouchParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = B315354F1F4D506000C67A3F /* TouchParticle.sks */; };
 		B31535521F4D5A2100C67A3F /* CicadaParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = B31535511F4D5A2100C67A3F /* CicadaParticle.sks */; };
 		B31535541F4D5C6B00C67A3F /* TouchParticle2.sks in Resources */ = {isa = PBXBuildFile; fileRef = B31535531F4D5C6B00C67A3F /* TouchParticle2.sks */; };
+		B3214C691F52B3C9001398DB /* CicadaButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3214C681F52B3C9001398DB /* CicadaButtons.swift */; };
 		B3C367161F504B33001AF76D /* BluetoothLE.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C367151F504B33001AF76D /* BluetoothLE.swift */; };
 		B3C367181F505542001AF76D /* SKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C367171F505542001AF76D /* SKButton.swift */; };
 		B3C3671B1F511694001AF76D /* ButtonTappedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C3671A1F511694001AF76D /* ButtonTappedDelegate.swift */; };
@@ -38,6 +39,7 @@
 		B315354F1F4D506000C67A3F /* TouchParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TouchParticle.sks; sourceTree = "<group>"; };
 		B31535511F4D5A2100C67A3F /* CicadaParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CicadaParticle.sks; sourceTree = "<group>"; };
 		B31535531F4D5C6B00C67A3F /* TouchParticle2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TouchParticle2.sks; sourceTree = "<group>"; };
+		B3214C681F52B3C9001398DB /* CicadaButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CicadaButtons.swift; sourceTree = "<group>"; };
 		B3C367151F504B33001AF76D /* BluetoothLE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothLE.swift; sourceTree = "<group>"; };
 		B3C367171F505542001AF76D /* SKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKButton.swift; sourceTree = "<group>"; };
 		B3C3671A1F511694001AF76D /* ButtonTappedDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonTappedDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 		B3C3671F1F511784001AF76D /* Button */ = {
 			isa = PBXGroup;
 			children = (
+				B3214C681F52B3C9001398DB /* CicadaButtons.swift */,
 				B3C367171F505542001AF76D /* SKButton.swift */,
 				B3C3671A1F511694001AF76D /* ButtonTappedDelegate.swift */,
 			);
@@ -200,6 +203,7 @@
 				B3C3671B1F511694001AF76D /* ButtonTappedDelegate.swift in Sources */,
 				B3C367181F505542001AF76D /* SKButton.swift in Sources */,
 				B3C367161F504B33001AF76D /* BluetoothLE.swift in Sources */,
+				B3214C691F52B3C9001398DB /* CicadaButtons.swift in Sources */,
 				B31535481F4C65A100C67A3F /* CicadaBlock.swift in Sources */,
 				B31535361F4C657A00C67A3F /* GameViewController.swift in Sources */,
 				B315352E1F4C657A00C67A3F /* AppDelegate.swift in Sources */,

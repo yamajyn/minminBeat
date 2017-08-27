@@ -17,6 +17,11 @@ class SKButton : SKNode{
     var offButton:SKTexture?
     var value = false
     
+    override init(){
+        button = SKSpriteNode()
+        super.init()
+    }
+    
     internal init(size: CGSize,imageNamed: String) {
         button = SKSpriteNode(imageNamed: imageNamed)
         offButton = button.texture!
