@@ -62,7 +62,7 @@ class BluetoothLE{
         }
         
         if let dataValue = Int(name.substring(from: name.index(name.endIndex, offsetBy: -1))){
-            let array: [UInt8] = [UInt8(dataKey),UInt8(dataValue - 1)]
+            let array: [UInt8] = [UInt8(dataKey),UInt8(dataValue)]
             let data = Data(bytes: array)
             self.update(data:data)
             printBytes(bytes: array)
