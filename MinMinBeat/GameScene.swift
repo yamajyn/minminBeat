@@ -61,8 +61,12 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
         self.addChild(cicadaButtons!)
     }
     
-    func buttonTapBegan(_ name: String) {
+    func buttonTapEnded(_ name: String){
         ble.nameToUInt8(name: name)
+    }
+    
+    func buttonFlicked(_ name: String) {
+        print(name + "flickd")
     }
     
     func padTap() {

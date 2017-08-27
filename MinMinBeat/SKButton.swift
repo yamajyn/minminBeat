@@ -16,6 +16,8 @@ class SKButton : SKNode{
     var onButton:SKTexture? //offの状態のテクスチャを変えたい時設定しておく
     var offButton:SKTexture?
     var value = false
+    var touchedPos:CGPoint?
+    var flicked = false
     
     override init(){
         button = SKSpriteNode()
@@ -47,6 +49,9 @@ class SKButton : SKNode{
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            self.touchedPos = touch.location(in: self)
+        }
         valueSwich()
         if value{
             if let onButton = onButton{
@@ -64,15 +69,28 @@ class SKButton : SKNode{
                 button.run(action)
             }
         }
-        tapDelegate.buttonTapBegan(self.name!)
+        //tapDelegate.buttonTapBegan!(self.name!)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //
+        for touch in touches{
+            if let touched = self.touchedPos{
+                let dist = touch.location(in: self).y - touched.y
+                if dist < -20{
+                    tapDelegate.buttonFlicked!(self.name!)
+                    self.touchedPos = nil
+                    self.flicked = true
+                }
+            }
+        }
     }
     
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        tapDelegate.buttonTapEnded?(self.name!)
+        if !flicked{
+            tapDelegate.buttonTapEnded?(self.name!)
+        }
+        flicked = false
     }
     
     func valueSwich(){

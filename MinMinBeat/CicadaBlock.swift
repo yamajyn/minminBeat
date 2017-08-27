@@ -14,14 +14,13 @@ struct PosData{
     var y:Int
 }
 
-class CicadaBlock : SKNode {
+class CicadaBlock : SKSpriteNode {
     
     weak var padDelegate: PadTappedDelegate!
     public var posData : PosData? //送信する座標データ
     private var maxPosValue : CGPoint //四角内の座標値の範囲
     
     var logo = SKSpriteNode(imageNamed: "logo")
-    let size : CGSize
     public var particle:SKEmitterNode?
     private let particleMode = ["TouchParticle2","TouchParticle2","CicadaParticle","TouchParticle","TouchParticle2"]
     
@@ -30,16 +29,17 @@ class CicadaBlock : SKNode {
     
     init(size:CGSize, position : CGPoint, valueRange : CGPoint) {
         self.maxPosValue = valueRange
-        self.size = size
-        super.init()
+        super.init(texture: nil, color: .clear, size: CGSize(width: size.width, height: size.height))
         self.isUserInteractionEnabled = true
-        self.zPosition = 10
+        self.zPosition = 100
+        self.anchorPoint = CGPoint(x: 0, y: 0)
         self.position = position
         self.logo.position = CGPoint(
             x: size.width / 2,
             y: size.height / 2
         )
         self.logo.setScale(0.3)
+        self.size = size
         self.addChild(logo)
     }
     
@@ -67,6 +67,7 @@ class CicadaBlock : SKNode {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("tapped")
         for t in touches {
             let touchPos = t.location(in: self)
             //particleを四角内に収める
