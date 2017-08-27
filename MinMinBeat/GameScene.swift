@@ -18,6 +18,7 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     var cicadaBlock : CicadaBlock?
     var cicadaButtons : CicadaButtons?
     
+    var last2: CFTimeInterval!
     var last: CFTimeInterval!
     var current: CFTimeInterval!
     
@@ -69,12 +70,19 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
         slider.value = 50
         slider.addTarget(self,
                          action: #selector(onMySlider(_:)),
-                         for: .touchUpInside)
+                         for: UIControlEvents.valueChanged)
         self.view?.addSubview(slider)
     }
     
     func onMySlider (_ sender: UISlider){
-        ble.volumeToUInt8(volume: Int(sender.value))
+        if !(last2 != nil) {
+            last2 = current
+        }
+        if last2 + 0.1 <= current{
+            ble.volumeToUInt8(volume: Int(sender.value))
+            last2 = current
+        }
+
     }
     
     
