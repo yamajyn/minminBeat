@@ -14,6 +14,8 @@ class CicadaButtons : SKNode{
     
     public var buttons : [[SKButton]] = [[]]
     
+    private let buttonNames = ["semi","track","sample"]
+    
     init(w:Int, h:Int, size:CGSize, position: CGPoint){
         super.init()
         self.position = position
@@ -26,7 +28,7 @@ class CicadaButtons : SKNode{
                 let buttonSize = CGSize(width: width * 9 / 50, height: width * 9 / 50)
                 let intervalW = buttonSize.width  + width / 20
                 let intervalH = height / 4
-                self.buttons[i].append(SKButton(size:buttonSize, imageNamed: "semi01"))
+                self.buttons[i].append(SKButton(size:buttonSize, imageNamed: buttonNames[h-1-i] + String(j)))
                 buttons[i][j].position.x = CGFloat(j) * intervalW
                 buttons[i][j].position.y = height / 10 + CGFloat(i) * intervalH
                 self.addChild(buttons[i][j])

@@ -64,7 +64,7 @@ class SKButton : SKNode{
                 button.run(action)
             }
         }
-        tapDelegate.buttonTapBegan(self.name! + String(value))
+        tapDelegate.buttonTapBegan(self.name!)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
