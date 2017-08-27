@@ -54,6 +54,8 @@ class BluetoothLE{
             dataKey = 4
         case "sample":
             dataKey = 5
+        case "master":
+            dataKey = 7
         default:
             print("データが受信できません")
             return
