@@ -14,24 +14,33 @@ struct PosData{
     var y:Int
 }
 
-class CicadaBlock : SKSpriteNode {
+class CicadaBlock : SKNode {
     
     weak var padDelegate: PadTappedDelegate!
     public var posData : PosData? //送信する座標データ
     private var maxPosValue : CGPoint //四角内の座標値の範囲
     
+    var logo = SKSpriteNode(imageNamed: "logo")
+    let size : CGSize
     public var particle:SKEmitterNode?
     private let particleMode = ["TouchParticle2","TouchParticle2","CicadaParticle","TouchParticle","TouchParticle2"]
     
     public var mode = 0
     
     
-    init(size : CGSize, valueRange : CGPoint) {
+    init(size:CGSize, position : CGPoint, valueRange : CGPoint) {
         self.maxPosValue = valueRange
-        super.init(texture: SKTexture(imageNamed: "logo"), color: UIColor.blue, size:size)
+        self.size = size
+        super.init()
         self.isUserInteractionEnabled = true
-        self.zPosition = 0
-        self.anchorPoint =  CGPoint(x: 0, y: 0)
+        self.zPosition = 10
+        self.position = position
+        self.logo.position = CGPoint(
+            x: size.width / 2,
+            y: size.height / 2
+        )
+        self.logo.setScale(0.3)
+        self.addChild(logo)
     }
     
     required init?(coder aDecoder: NSCoder) {

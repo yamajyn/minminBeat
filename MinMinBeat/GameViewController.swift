@@ -30,7 +30,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
         
         if let view = self.view as! SKView? {
             
-            scene = GameScene()
+            scene = GameScene(size:CGSize(width:2048,height:2732))
             // Set the scale mode to scale to fit the window
             scene!.scaleMode = .aspectFill
             scene!.size = view.frame.size

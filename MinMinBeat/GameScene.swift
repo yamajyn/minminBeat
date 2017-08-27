@@ -15,39 +15,50 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     
     
     var cicadaBlock : CicadaBlock?
-    private var buttons : [SKButton] = []
-    var count = 0
+    var cicadaButtons : CicadaButtons?
     
     var last: CFTimeInterval!
     var current: CFTimeInterval!
     
     let ble = BluetoothLE()
+    let wButtonNum = 5
+    let hButtonNum = 3
     
+    override init(size:CGSize){
+        super.init(size:size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func didMove(to view: SKView) {
         
         //Create cicadaBlock node
-        let len = self.size.width
+        let w = self.size.width * 0.4
+        let h = self.size.height * 0.8
+        let size = CGSize(width: w, height: h)
         self.cicadaBlock = CicadaBlock(
-            size: CGSize(width:len * 0.8,height:len * 0.8),
+            size: size,
+            position: CGPoint(x: self.size.width * 11 / 20, y: self.size.height / 10),
             valueRange: CGPoint(x:255,y:255)
         )
-        if let block = self.cicadaBlock{
-            block.position = CGPoint(x: self.size.width / 10, y: self.size.height / 3)
-            self.addChild(block)
-            block.padDelegate = self
-        }
+        self.addChild(self.cicadaBlock!)
+        self.cicadaBlock!.padDelegate = self
         
         //Create cicadaButton
-        for i in 0...4{
-            let buttonSize = CGSize(width: len * 9 / 50, height: len * 9 / 50)
-            let interval = (len * 0.9 - buttonSize.width) / 4
-            let x = len / 20 + CGFloat(i) * interval
-            self.buttons.append(SKButton(size:buttonSize, imageNamed: "semi0" + String(i+1)))
-            buttons[i].position = CGPoint(x:x,y:100)
-            buttons[i].tapDelegate = self
-            self.addChild(buttons[i])
+        self.cicadaButtons =  CicadaButtons(
+            w:wButtonNum,
+            h:hButtonNum,
+            size: size,
+            position: CGPoint(x: self.size.width / 15, y: self.size.height / 15)
+        )
+        for i in 0...hButtonNum - 1 {
+            for j in 0...wButtonNum - 1{
+                self.cicadaButtons?.buttons[i][j].tapDelegate = self
+            }
         }
+        self.addChild(cicadaButtons!)
     }
     
     func buttonTapBegan(_ name: String) {
