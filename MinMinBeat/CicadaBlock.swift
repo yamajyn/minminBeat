@@ -27,6 +27,7 @@ class CicadaBlock : SKSpriteNode {
     public var mode = 0
     
     
+    
     init(size:CGSize, position : CGPoint, valueRange : CGPoint) {
         self.maxPosValue = valueRange
         super.init(texture: nil, color: .clear, size: CGSize(width: size.width, height: size.height))

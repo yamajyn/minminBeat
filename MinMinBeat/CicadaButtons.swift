@@ -16,6 +16,8 @@ class CicadaButtons : SKNode{
     
     private let buttonNames = ["semi","track","sample"]
     
+    public var muteMark:[SKSpriteNode] = []
+    
     init(w:Int, h:Int, size:CGSize, position: CGPoint){
         super.init()
         self.position = position
@@ -29,13 +31,28 @@ class CicadaButtons : SKNode{
                 let intervalW = buttonSize.width  + width / 20
                 let intervalH = height / 4
                 self.buttons[i].append(SKButton(size:buttonSize, imageNamed: buttonNames[h-1-i] + String(j)))
-                buttons[i][j].position.x = CGFloat(j) * intervalW
-                buttons[i][j].position.y = height / 10 + CGFloat(i) * intervalH
+                let xPos = CGFloat(j) * intervalW
+                let yPos = height / 10 + CGFloat(i) * intervalH
+                buttons[i][j].position.x = xPos
+                buttons[i][j].position.y = yPos
                 self.addChild(buttons[i][j])
+                if i == 1{
+                    muteMark.append(SKSpriteNode(imageNamed:"mute"))
+                    muteMark[j].position.x = xPos + buttonSize.width / 2
+                    muteMark[j].position.y = yPos + buttonSize.height * 1.3
+                    muteMark[j].size = CGSize(
+                        width: buttonSize.width * 0.3,
+                        height: buttonSize.height * 0.3
+                    )
+                    self.muteMark[j].alpha = 0.0
+                    self.addChild(muteMark[j])
+                }
             }
         }
         
     }
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

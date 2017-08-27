@@ -61,12 +61,48 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
         self.addChild(cicadaButtons!)
     }
     
+    
     func buttonTapEnded(_ name: String){
         ble.nameToUInt8(name: name)
     }
     
-    func buttonFlicked(_ name: String) {
-        print(name + "flickd")
+    func buttondownFlicked(_ name: String) {
+        let type = name.substring(to: name.index(before: name.endIndex))
+        if type == "track"{
+            if let index = Int(name.substring(from: name.index(before: name.endIndex))){
+                if !self.cicadaButtons!.buttons[1][index].muted{
+                    //mute実行
+                    self.cicadaButtons!.muteMark[index].run(self.fadeIn())
+                    self.cicadaButtons!.buttons[1][index].muteSwitch()
+                    ble.nameToUInt8(name:"mute" + name)
+                }
+            }
+        }
+    }
+    
+    func buttonupFlicked(_ name: String){
+        let type = name.substring(to: name.index(before: name.endIndex))
+        if type == "track"{
+            if let index = Int(name.substring(from: name.index(before: name.endIndex))){
+                if self.cicadaButtons!.buttons[1][index].muted{
+                    //mute解除
+                    self.cicadaButtons!.muteMark[index].run(self.fadeOut())
+                    self.cicadaButtons!.buttons[1][index].muteSwitch()
+                    ble.nameToUInt8(name:"mute" + name)
+                }
+            }
+        }
+    }
+    
+    func fadeIn() -> SKAction{
+        let fade = SKAction.fadeIn(withDuration: 0.1)
+        let move = SKAction.moveBy(x: 0, y: 10, duration: 0.1)
+        return SKAction.group([fade,move])
+    }
+    func fadeOut() -> SKAction{
+        let fade = SKAction.fadeOut(withDuration: 0.1)
+        let move = SKAction.moveBy(x: 0, y: -10, duration: 0.1)
+        return SKAction.group([fade,move])
     }
     
     func padTap() {

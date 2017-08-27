@@ -18,6 +18,7 @@ class SKButton : SKNode{
     var value = false
     var touchedPos:CGPoint?
     var flicked = false
+    var muted = false
     
     override init(){
         button = SKSpriteNode()
@@ -53,23 +54,6 @@ class SKButton : SKNode{
             self.touchedPos = touch.location(in: self)
         }
         valueSwich()
-        if value{
-            if let onButton = onButton{
-                button.texture = onButton
-            }else{
-                let action = SKAction.scale(to: 0.9, duration: 0.03)
-                button.run(action)
-            }
-        }else{
-            if let offButton = offButton{
-                button.texture = offButton
-            }
-            if onButton == nil{
-                let action = SKAction.scale(to: 1.0, duration: 0.03)
-                button.run(action)
-            }
-        }
-        //tapDelegate.buttonTapBegan!(self.name!)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -77,7 +61,11 @@ class SKButton : SKNode{
             if let touched = self.touchedPos{
                 let dist = touch.location(in: self).y - touched.y
                 if dist < -20{
-                    tapDelegate.buttonFlicked!(self.name!)
+                    tapDelegate.buttondownFlicked!(self.name!)
+                    self.touchedPos = nil
+                    self.flicked = true
+                }else if dist > 20{
+                    tapDelegate.buttonupFlicked!(self.name!)
                     self.touchedPos = nil
                     self.flicked = true
                 }
@@ -88,6 +76,22 @@ class SKButton : SKNode{
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !flicked{
+            if value{
+                if let onButton = onButton{
+                    button.texture = onButton
+                }else{
+                    let action = SKAction.scale(to: 0.9, duration: 0.03)
+                    button.run(action)
+                }
+            }else{
+                if let offButton = offButton{
+                    button.texture = offButton
+                }
+                if onButton == nil{
+                    let action = SKAction.scale(to: 1.0, duration: 0.03)
+                    button.run(action)
+                }
+            }
             tapDelegate.buttonTapEnded?(self.name!)
         }
         flicked = false
@@ -95,6 +99,10 @@ class SKButton : SKNode{
     
     func valueSwich(){
         self.value = !self.value
+    }
+    
+    func muteSwitch(){
+        self.muted = !self.muted
     }
 }
 
