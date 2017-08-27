@@ -32,4 +32,24 @@ class BluetoothLE{
             }
         }
     }
+    
+    func posDataToUInt8(posData:PosData){
+        let array : [UInt8] = [UInt8(0),UInt8(posData.x),UInt8(posData.y)]
+        let sendData = Data(bytes: array)
+        self.update(data: sendData)
+        printBytes(bytes: array)
+    }
+    
+    func nameToUInt8(name:String){
+        if let data = name.data(using: .utf8){
+            self.update(data:data)
+        }
+    }
+    
+    func printBytes(bytes:[UInt8]){
+        let hexStr = Data(bytes: bytes).map {
+            String(format: "%.2hhx", $0)
+            }.joined()
+        print(hexStr)
+    }
 }

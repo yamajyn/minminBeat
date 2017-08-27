@@ -51,38 +51,25 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     }
     
     func buttonTapBegan(_ name: String) {
-        if let data = name.data(using: .utf8){
-            self.ble.update(data:data)
-        }
+        ble.nameToUInt8(name: name)
     }
     
     func padTap() {
         //タップした位置データ取得
         if let posData  = self.cicadaBlock!.posData {
             //位置データをDataに変換
-            let array : [UInt8] = [UInt8(posData.x),UInt8(posData.y)]
-            let sendData = Data(bytes: array)
             if !(last != nil) {
                 last = current
             }
             if last + 0.1 <= current{
-                self.ble.update(data: sendData)
+                self.ble.posDataToUInt8(posData: posData)
                 last = current
             }
         }
     }
     
-    
-    
     override func update(_ currentTime: TimeInterval) {
         current = currentTime
-    }
-    
-    func printBytes(bytes:[UInt8]){
-        let hexStr = Data(bytes: bytes).map {
-            String(format: "%.2hhx", $0)
-            }.joined()
-        print(hexStr)
     }
     
 }
