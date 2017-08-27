@@ -41,9 +41,36 @@ class BluetoothLE{
     }
     
     func nameToUInt8(name:String){
-        if let data = name.data(using: .utf8){
-            self.update(data:data)
+        var dataKey:Int = 0
+        let dataname:String = name.substring(to: name.index(name.endIndex, offsetBy: -1))
+        switch dataname {
+        case "semi":
+            dataKey = 1
+        case "track":
+            dataKey = 2
+        case "recLength":
+            dataKey = 3
+        case "mutetrack":
+            dataKey = 4
+        case "sample":
+            dataKey = 5
+        default:
+            print("データが受信できません")
         }
+        
+        if let dataValue = Int(name.substring(from: name.index(name.endIndex, offsetBy: -1))){
+            let array: [UInt8] = [UInt8(dataKey),UInt8(dataValue)]
+            let data = Data(bytes: array)
+            self.update(data:data)
+            printBytes(bytes: array)
+        }
+    }
+    
+    func volumeToUInt8(posData:PosData){
+        let array: [UInt8] = [UInt8(6),UInt8(posData.y)]
+        let sendData = Data(bytes: array)
+        self.update(data: sendData)
+        printBytes(bytes: array)
     }
     
     func printBytes(bytes:[UInt8]){
