@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import UIKit
 
 
 
@@ -59,9 +60,25 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
             }
         }
         self.addChild(cicadaButtons!)
+        
+        
+        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: w, height: 50))
+        slider.layer.position = CGPoint(x: self.size.width * 2 / 7, y: self.size.height * 2 / 7)
+        slider.minimumValue = 0
+        slider.maximumValue = 100
+        slider.value = 50
+        slider.addTarget(self,
+                         action: #selector(onMySlider(_:)),
+                         for: .touchUpInside)
+        self.view?.addSubview(slider)
+    }
+    
+    func onMySlider (_ sender: UISlider){
+        ble.volumeToUInt8(volume: Int(sender.value))
     }
     
     
+
     func buttonTapEnded(_ name: String){
         ble.nameToUInt8(name: name)
     }
