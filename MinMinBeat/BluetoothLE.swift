@@ -69,8 +69,8 @@ class BluetoothLE{
         }
     }
     
-    func volumeToUInt8(posData:PosData){
-        let array: [UInt8] = [UInt8(6),UInt8(posData.y)]
+    func volumeToUInt8(volume:Int){
+        let array: [UInt8] = [UInt8(6),UInt8(volume)]
         let sendData = Data(bytes: array)
         self.update(data: sendData)
         printBytes(bytes: array)
