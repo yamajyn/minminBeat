@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import UIKit
 
 
 
@@ -17,6 +18,7 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     var cicadaBlock : CicadaBlock?
     var cicadaButtons : CicadaButtons?
     
+    var last2: CFTimeInterval!
     var last: CFTimeInterval!
     var current: CFTimeInterval!
     
@@ -59,9 +61,32 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
             }
         }
         self.addChild(cicadaButtons!)
+        
+        
+        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: w, height: 50))
+        slider.layer.position = CGPoint(x: self.size.width * 2 / 7, y: self.size.height * 2 / 7)
+        slider.minimumValue = 0
+        slider.maximumValue = 100
+        slider.value = 50
+        slider.addTarget(self,
+                         action: #selector(onMySlider(_:)),
+                         for: UIControlEvents.valueChanged)
+        self.view?.addSubview(slider)
+    }
+    
+    func onMySlider (_ sender: UISlider){
+        if !(last2 != nil) {
+            last2 = current
+        }
+        if last2 + 0.1 <= current{
+            ble.volumeToUInt8(volume: Int(sender.value))
+            last2 = current
+        }
+
     }
     
     
+
     func buttonTapEnded(_ name: String){
         ble.nameToUInt8(name: name)
         
