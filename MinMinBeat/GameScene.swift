@@ -8,7 +8,6 @@
 
 import SpriteKit
 import GameplayKit
-import CoreBluetooth
 
 
 
@@ -16,25 +15,13 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     
     
     var cicadaBlock : CicadaBlock?
-    var sendData : Data?
     private var buttons : [SKButton] = []
-    
-    var targetPeripheral: CBPeripheral?
-    var targetService: CBService!
-    var targetCharacteristic: CBCharacteristic?
     var count = 0
-    
     
     var last: CFTimeInterval!
     var current: CFTimeInterval!
     
-    public func setPeripheral(targetpPeripheral:CBPeripheral){
-        self.targetPeripheral = targetpPeripheral
-    }
-    
-    public func setCharacter(targetCharacteristic:CBCharacteristic){
-        self.targetCharacteristic = targetCharacteristic
-    }
+    let ble = BluetoothLE()
     
     
     override func didMove(to view: SKView) {
@@ -65,7 +52,7 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     
     func buttonTapBegan(_ name: String) {
         if let data = name.data(using: .utf8){
-            update(data:data)
+            self.ble.update(data:data)
         }
     }
     
@@ -74,28 +61,17 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
         if let posData  = self.cicadaBlock!.posData {
             //位置データをDataに変換
             let array : [UInt8] = [UInt8(posData.x),UInt8(posData.y)]
-            self.sendData = Data(bytes: array)
+            let sendData = Data(bytes: array)
             if !(last != nil) {
                 last = current
             }
-            
             if last + 0.1 <= current{
-                if let d = self.sendData{
-                    update(data:d)
-                }
+                self.ble.update(data: sendData)
                 last = current
             }
         }
     }
-    //データの送信用関数
-    func update(data:Data){
-        if let targetChara = self.targetCharacteristic{
-            if let targetPeriphe = self.targetPeripheral{
-            targetPeriphe.writeValue(data, for: targetChara,type:CBCharacteristicWriteType.withResponse)
-            print("complete")
-            }
-        }
-    }
+    
     
     
     override func update(_ currentTime: TimeInterval) {

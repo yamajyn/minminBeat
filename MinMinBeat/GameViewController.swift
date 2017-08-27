@@ -138,8 +138,8 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
         }else{
             targetCharacteristic = service.characteristics![0]
             if let scene = self.scene{
-                scene.setPeripheral(targetpPeripheral: self.targetPeripheral)
-                scene.setCharacter(targetCharacteristic: self.targetCharacteristic)
+                scene.ble.setPeripheral(targetpPeripheral: self.targetPeripheral)
+                scene.ble.setCharacter(targetCharacteristic: self.targetCharacteristic)
             }
         }
         
