@@ -25,7 +25,7 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     
     let ble = BluetoothLE()
     let wButtonNum = 5
-    let hButtonNum = 3
+    let hButtonNum = 4
     
     override init(size:CGSize){
         super.init(size:size)
@@ -97,6 +97,24 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
             return
         }
         ble.nameToUInt8(name: name)
+        
+        let type = name.substring(to: name.index(before: name.endIndex))
+        if type == "recLength"{
+            if let index = Int(name.substring(from: name.index(before: name.endIndex))){
+                if index < 4{
+                    for i in 0...index+1{
+                        self.cicadaButtons!.buttons[0][i].onButtonState()
+                    }
+                    for i in index+1...4{
+                        self.cicadaButtons!.buttons[0][i].offButtonState()
+                    }
+                }else{
+                    for i in 0...4{
+                        self.cicadaButtons!.buttons[0][i].onButtonState()
+                    }
+                }
+            }
+        }
     }
     
     func buttondownFlicked(_ name: String) {
