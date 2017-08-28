@@ -43,7 +43,7 @@ class CicadaButtons : SKNode{
                     yPos = CGFloat(i+1) * intervalH - size.height / 10
                 }else{
                     //それ以外
-                    self.buttons[i].append(SKButton(size:buttonSize, imageNamed: buttonNames[h-1-i] + String(j)))
+                    self.buttons[i].append(SKButton(size:buttonSize, offTexture: buttonNames[h-1-i] + String(j), onTexture: buttonNames[h-1-i] + String(j) + "_off"))
                     yPos = CGFloat(i) * intervalH
                     self.buttons[i][j].zPosition = 10
                 }
