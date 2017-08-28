@@ -39,11 +39,13 @@ class CicadaButtons : SKNode{
                         SKButton(size: buttonSize, offTexture: "mute_off", onTexture: "mute_on")
                     )
                     self.buttons[i][j].name = "mutetrack" + String(j)
+                    self.buttons[i][j].zPosition = 5
                     yPos = CGFloat(i+1) * intervalH - size.height / 10
                 }else{
                     //それ以外
                     self.buttons[i].append(SKButton(size:buttonSize, imageNamed: buttonNames[h-1-i] + String(j)))
                     yPos = CGFloat(i) * intervalH
+                    self.buttons[i][j].zPosition = 10
                 }
                 buttons[i][j].position.x = xPos
                 buttons[i][j].position.y = yPos
@@ -51,6 +53,7 @@ class CicadaButtons : SKNode{
             }
         }
     }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

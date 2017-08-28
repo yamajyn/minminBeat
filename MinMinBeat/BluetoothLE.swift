@@ -38,7 +38,7 @@ class BluetoothLE{
         let array : [UInt8] = [UInt8(0),UInt8(posData.x),UInt8(posData.y)]
         let sendData = Data(bytes: array)
         self.update(data: sendData)
-        printBytes(bytes: array)
+        //printBytes(bytes: array)
     }
     
     func nameToUInt8(name:String){
@@ -64,7 +64,7 @@ class BluetoothLE{
             let array: [UInt8] = [UInt8(dataKey),UInt8(dataValue)]
             let data = Data(bytes: array)
             self.update(data:data)
-            printBytes(bytes: array)
+            //printBytes(bytes: array)
         }
     }
     

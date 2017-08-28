@@ -17,17 +17,22 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     
     var cicadaBlock : CicadaBlock?
     var cicadaButtons : CicadaButtons?
-    let masterButton = SKButton(size: CGSize(width: 50, height: 50), imageNamed: "master")
+    let masterButton = SKButton(size: CGSize(width: 70, height: 70), offTexture: "stop", onTexture: "start")
     
-    var last2: CFTimeInterval!
-    var last: CFTimeInterval!
+    var slideLast: CFTimeInterval!
+    var padTapLast: CFTimeInterval!
+    var lightLast : CFTimeInterval!
     var current: CFTimeInterval!
     
     let ble = BluetoothLE()
     let wButtonNum = 5
     let hButtonNum = 4
+    var recLast: [CFTimeInterval?] = [nil,nil,nil,nil,nil]
+    var recLength: [CFTimeInterval?] = [nil,nil,nil,nil,nil]
+    
     
     override init(size:CGSize){
+        
         super.init(size:size)
     }
     
@@ -65,9 +70,12 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
         
         
         let slider = UISlider(frame: CGRect(x: 0, y: 0, width: w, height: 50))
-        slider.layer.position = CGPoint(x: w / 2, y: self.size.height - 50)
+        slider.layer.position = CGPoint(x: self.size.width / 12 + w / 2, y: self.size.height / 4)
         slider.minimumValue = 0
         slider.maximumValue = 100
+        slider.maximumTrackTintColor = .gray
+        slider.minimumTrackTintColor = .red
+        slider.setThumbImage(UIImage(named:"slider.png"), for: UIControlState.normal)
         slider.value = 50
         slider.addTarget(self,
                          action: #selector(onMySlider(_:)),
@@ -75,18 +83,20 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
         self.view?.addSubview(slider)
         
         masterButton.tapDelegate = self
-        masterButton.position = CGPoint(x: 0, y: self.size.height - 50)
+        masterButton.position = CGPoint(x: 0, y: 0)
         self.addChild(masterButton)
         masterButton.value = false
+        masterButton.name = "master"
+        
     }
     
     func onMySlider (_ sender: UISlider){
-        if !(last2 != nil) {
-            last2 = current
+        if !(slideLast != nil) {
+            slideLast = current
         }
-        if last2 + 0.1 <= current{
+        if slideLast + 0.1 <= current{
             ble.volumeToUInt8(volume: Int(sender.value))
-            last2 = current
+            slideLast = current
         }
 
     }
@@ -99,79 +109,60 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
         ble.nameToUInt8(name: name)
         
         let type = name.substring(to: name.index(before: name.endIndex))
-        if type == "recLength"{
-            if let index = Int(name.substring(from: name.index(before: name.endIndex))){
-                if index < 4{
-                    for i in 0...index+1{
-                        self.cicadaButtons!.buttons[0][i].onButtonState()
-                    }
-                    for i in index+1...4{
-                        self.cicadaButtons!.buttons[0][i].offButtonState()
-                    }
-                }else{
-                    for i in 0...4{
-                        self.cicadaButtons!.buttons[0][i].onButtonState()
-                    }
-                }
-            }
-        }
-    }
-    
-    func buttondownFlicked(_ name: String) {
-        let type = name.substring(to: name.index(before: name.endIndex))
         if type == "track"{
             if let index = Int(name.substring(from: name.index(before: name.endIndex))){
-                if !self.cicadaButtons!.buttons[1][index].muted{
-                    //mute実行
-                    self.cicadaButtons!.muteMark[index].run(self.fadeIn())
-                    self.cicadaButtons!.buttons[1][index].muteSwitch()
-                    ble.nameToUInt8(name:"mute" + name)
-                }
+                self.recLength[index] = CFTimeInterval(pow(2.0, Double(index)-1))
             }
         }
-    }
-    
-    func buttonupFlicked(_ name: String){
-        let type = name.substring(to: name.index(before: name.endIndex))
-        if type == "track"{
-            if let index = Int(name.substring(from: name.index(before: name.endIndex))){
-                if self.cicadaButtons!.buttons[1][index].muted{
-                    //mute解除
-                    self.cicadaButtons!.muteMark[index].run(self.fadeOut())
-                    self.cicadaButtons!.buttons[1][index].muteSwitch()
-                    ble.nameToUInt8(name:"mute" + name)
-                }
-            }
-        }
-    }
-    
-    func fadeIn() -> SKAction{
-        let fade = SKAction.fadeIn(withDuration: 0.1)
-        let move = SKAction.moveBy(x: 0, y: 10, duration: 0.1)
-        return SKAction.group([fade,move])
-    }
-    func fadeOut() -> SKAction{
-        let fade = SKAction.fadeOut(withDuration: 0.1)
-        let move = SKAction.moveBy(x: 0, y: -10, duration: 0.1)
-        return SKAction.group([fade,move])
     }
     
     func padTap() {
         //タップした位置データ取得
         if let posData  = self.cicadaBlock!.posData {
             //位置データをDataに変換
-            if !(last != nil) {
-                last = current
+            if !(padTapLast != nil) {
+                padTapLast = current
             }
-            if last + 0.1 <= current{
+            if padTapLast + 0.1 <= current{
                 self.ble.posDataToUInt8(posData: posData)
-                last = current
+                padTapLast = current
             }
         }
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        current = currentTime
+    func resetButtonState(){
     }
     
+    override func update(_ currentTime: TimeInterval) {
+        current = currentTime
+        recEnd()
+        
+    }
+    
+    
+    func recEnd(){
+        
+        for (i,recLen) in recLength.enumerated(){
+            if let len = recLen{
+                if !(recLast[i] != nil) {
+                    recLast[i] = current
+                }
+                if recLast[i]! + len <= current{
+                    self.cicadaButtons!.buttons[1][i].resetButtonState()
+                    recLength[i] = nil
+                    recLast[i] = nil
+                }
+            }
+        }
+        
+    }
+    func lightAction(){
+        if !(lightLast != nil) {
+            lightLast = current
+        }
+        if lightLast + 0.5 <= current{
+            //self.run(lightAction)
+            lightLast = current
+        }
+    }
 }

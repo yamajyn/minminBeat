@@ -19,6 +19,7 @@ class SKButton : SKNode{
     var touchedPos:CGPoint?
     var flicked = false
     var muted = false
+    var rec = false
     
     override init(){
         button = SKSpriteNode()
@@ -90,6 +91,9 @@ class SKButton : SKNode{
         self.muted = !self.muted
     }
     
+    func recSwitch(){
+        self.rec = !self.rec
+    }
     func changeButtonState(){
         if value{
             onButtonState()
@@ -115,6 +119,16 @@ class SKButton : SKNode{
             let action = SKAction.scale(to: 1.0, duration: 0.1)
             button.run(action)
         }
+    }
+    public func resetButtonState(){
+        if let offButton = offButton{
+            button.texture = offButton
+        }
+        if onButton == nil{
+            let action = SKAction.scale(to: 1.0, duration: 0.1)
+            button.run(action)
+        }
+        value = false
     }
     
 }

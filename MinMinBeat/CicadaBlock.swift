@@ -42,6 +42,7 @@ class CicadaBlock : SKSpriteNode {
         self.logo.setScale(0.3)
         self.size = size
         self.addChild(logo)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

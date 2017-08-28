@@ -140,6 +140,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
             if let scene = self.scene{
                 scene.ble.setPeripheral(targetpPeripheral: self.targetPeripheral)
                 scene.ble.setCharacter(targetCharacteristic: self.targetCharacteristic)
+                scene.resetButtonState()
             }
         }
         
