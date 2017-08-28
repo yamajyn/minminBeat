@@ -14,7 +14,7 @@ class CicadaButtons : SKNode{
     
     public var buttons : [[SKButton]] = [[]]
     
-    private let buttonNames = ["semi","sample","track","recLength"]
+    private let buttonNames = ["semi","sample","track"]
     
     public var muteMark:[SKSpriteNode] = []
     private let muteMarkPos:Int = 1
@@ -25,34 +25,32 @@ class CicadaButtons : SKNode{
         self.zPosition = 10
         let width = size.width
         let height = size.height
+        let buttonSize = CGSize(width: width * 9 / 50, height: width * 9 / 50)
+        let intervalW = buttonSize.width  + width / 20
+        let intervalH = height / 5
         for i in 0...h-1{
             self.buttons.append([])
             for j in 0...w-1{
-                let buttonSize = CGSize(width: width * 9 / 50, height: width * 9 / 50)
-                let intervalW = buttonSize.width  + width / 20
-                let intervalH = height / 4
-                self.buttons[i].append(SKButton(size:buttonSize, imageNamed: buttonNames[h-1-i] + String(j)))
                 let xPos = CGFloat(j) * intervalW
-                let yPos = height / 10 + CGFloat(i) * intervalH
+                var yPos:CGFloat
+                //ミュートボタン
+                if(i == 0){
+                    self.buttons[i].append(
+                        SKButton(size: buttonSize, offTexture: "mute_off", onTexture: "mute_on")
+                    )
+                    self.buttons[i][j].name = "mutetrack" + String(j)
+                    yPos = CGFloat(i+1) * intervalH - size.height / 10
+                }else{
+                    //それ以外
+                    self.buttons[i].append(SKButton(size:buttonSize, imageNamed: buttonNames[h-1-i] + String(j)))
+                    yPos = CGFloat(i) * intervalH
+                }
                 buttons[i][j].position.x = xPos
                 buttons[i][j].position.y = yPos
                 self.addChild(buttons[i][j])
-                if i == muteMarkPos{
-                    muteMark.append(SKSpriteNode(imageNamed:"mute"))
-                    muteMark[j].position.x = xPos + buttonSize.width / 2
-                    muteMark[j].position.y = yPos + buttonSize.height * 1.3
-                    muteMark[j].size = CGSize(
-                        width: buttonSize.width * 0.3,
-                        height: buttonSize.height * 0.3
-                    )
-                    self.muteMark[j].alpha = 0.0
-                    self.addChild(muteMark[j])
-                }
             }
         }
     }
-    
-    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
