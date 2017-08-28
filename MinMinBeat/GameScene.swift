@@ -17,7 +17,7 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     
     var cicadaBlock : CicadaBlock?
     var cicadaButtons : CicadaButtons?
-    let masterButton = SKButton(size: CGSize(width: 70, height: 70), offTexture: "stop", onTexture: "start")
+    let masterButton = SKButton(size: CGSize(width: 80, height: 80), offTexture: "start", onTexture: "stop")
     
     var slideLast: CFTimeInterval!
     var padTapLast: CFTimeInterval!
@@ -83,12 +83,11 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
         self.view?.addSubview(slider)
         
         masterButton.tapDelegate = self
-        masterButton.position = CGPoint(x: 0, y: 0)
+        masterButton.position = CGPoint(x: 50, y: self.size.height - 100)
         self.addChild(masterButton)
         masterButton.value = false
         masterButton.name = "master"
         self.backgroundColor = UIColor(colorLiteralRed: 0.156, green: 0.117, blue: 0.117, alpha: 1.0)
-        
     }
     
     func onMySlider (_ sender: UISlider){
