@@ -39,7 +39,8 @@ class CicadaBlock : SKSpriteNode {
             x: size.width / 2,
             y: size.height / 2
         )
-        self.logo.setScale(0.3)
+        let scale = self.size.width / self.logo.size.width
+        self.logo.setScale(scale)
         self.size = size
         self.addChild(logo)
         

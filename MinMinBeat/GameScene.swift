@@ -29,7 +29,7 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     let hButtonNum = 4
     var recLast: [CFTimeInterval?] = [nil,nil,nil,nil,nil]
     var recLength: [CFTimeInterval?] = [nil,nil,nil,nil,nil]
-    
+    var cicada = SKSpriteNode(imageNamed:"cicada")
     
     override init(size:CGSize){
         
@@ -83,11 +83,19 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
         self.view?.addSubview(slider)
         
         masterButton.tapDelegate = self
-        masterButton.position = CGPoint(x: 50, y: self.size.height - 100)
+        masterButton.position = CGPoint(x: self.size.width / 20, y: self.size.height * 8 / 9)
         self.addChild(masterButton)
+        masterButton.button.size = CGSize(width: self.size.width / 20, height: self.size.width / 20)
         masterButton.value = false
         masterButton.name = "master"
+        masterButton.zPosition = 20
         self.backgroundColor = UIColor(colorLiteralRed: 0.156, green: 0.117, blue: 0.117, alpha: 1.0)
+        
+        cicada.size = CGSize(width: 30, height: 30)
+        cicada.position = CGPoint(x: self.size.width / 8, y: self.size.height * 8 / 9 + self.size.width / 20 - 30)
+        self.addChild(cicada)
+        
+        
     }
     
     func onMySlider (_ sender: UISlider){
@@ -103,6 +111,17 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
 
     func buttonTapEnded(_ name: String){
         if name == "master"{
+            if masterButton.value{
+                let rotate = SKAction.rotate(byAngle: CGFloat(Double.pi/2), duration: 0.1)
+                let wait = SKAction.wait(forDuration: 0.5)
+                let action = SKAction.group([rotate,wait])
+                let loop = SKAction.repeatForever(action)
+                cicada.run(loop)
+                cicada.zRotation = 0
+            }else{
+                cicada.removeAllActions()
+            }
+            
             ble.masterToUInt8(state: masterButton.value)
             return
         }
@@ -136,7 +155,6 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
     override func update(_ currentTime: TimeInterval) {
         current = currentTime
         recEnd()
-        
     }
     
     func recEnd(){
