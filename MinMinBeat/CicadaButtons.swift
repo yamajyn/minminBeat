@@ -14,9 +14,10 @@ class CicadaButtons : SKNode{
     
     public var buttons : [[SKButton]] = [[]]
     
-    private let buttonNames = ["semi","track","sample","recLength"]
+    private let buttonNames = ["semi","sample","track","recLength"]
     
     public var muteMark:[SKSpriteNode] = []
+    private let muteMarkPos:Int = 1
     
     init(w:Int, h:Int, size:CGSize, position: CGPoint){
         super.init()
@@ -36,7 +37,7 @@ class CicadaButtons : SKNode{
                 buttons[i][j].position.x = xPos
                 buttons[i][j].position.y = yPos
                 self.addChild(buttons[i][j])
-                if i == 2{
+                if i == muteMarkPos{
                     muteMark.append(SKSpriteNode(imageNamed:"mute"))
                     muteMark[j].position.x = xPos + buttonSize.width / 2
                     muteMark[j].position.y = yPos + buttonSize.height * 1.3
@@ -49,7 +50,6 @@ class CicadaButtons : SKNode{
                 }
             }
         }
-        
     }
     
     

@@ -125,7 +125,7 @@ class GameViewController: UIViewController, CBCentralManagerDelegate, CBPeripher
     }
     //サービスを検索した時に呼び出される
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        print(peripheral.services)
+        print(peripheral.services ?? "peripheral.services is nil value")
         peripheral.delegate = self
         targetService = peripheral.services![0]
         //指定のUUIDでcharacteristicを検索する
