@@ -10,8 +10,6 @@ import Foundation
 
 @objc protocol ButtonTappedDelegate : class {
     @objc optional func buttonTapBegan(_ name:String)
-    @objc optional func buttondownFlicked(_ name:String)
-    @objc optional func buttonupFlicked(_ name:String)
     @objc optional func buttonTapEnded(_ name:String)
     @objc optional func buttonTapCancelled(_ name:String)
 }

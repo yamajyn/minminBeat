@@ -87,6 +87,7 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
         self.addChild(masterButton)
         masterButton.value = false
         masterButton.name = "master"
+        self.backgroundColor = UIColor(colorLiteralRed: 0.156, green: 0.117, blue: 0.117, alpha: 1.0)
         
     }
     
@@ -139,7 +140,6 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
         
     }
     
-    
     func recEnd(){
         
         for (i,recLen) in recLength.enumerated(){
@@ -155,14 +155,5 @@ class GameScene: SKScene,ButtonTappedDelegate,PadTappedDelegate{
             }
         }
         
-    }
-    func lightAction(){
-        if !(lightLast != nil) {
-            lightLast = current
-        }
-        if lightLast + 0.5 <= current{
-            //self.run(lightAction)
-            lightLast = current
-        }
     }
 }
